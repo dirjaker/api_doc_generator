@@ -1,0 +1,48 @@
+# API文档生成器配置
+
+# 项目信息
+project:
+  title: "My API Documentation"
+  version: "1.0.0"
+  description: "自动生成的API文档"
+
+# 源代码配置
+source:
+  # 要扫描的目录或文件
+  path: "./src"
+  # 排除的文件模式
+  exclude:
+    - "**/test_*.py"
+    - "**/__pycache__/**"
+    - "**/venv/**"
+
+# 输出配置
+output:
+  # 输出格式: markdown, html, openapi
+  format: "markdown"
+  # 输出目录
+  directory: "./docs"
+  # 输出文件名
+  filename: "api_docs"
+
+# 模板配置
+template:
+  # 自定义模板目录
+  directory: "./templates"
+  # 使用的模板文件（为空则使用默认）
+  file: ""
+
+# 服务器配置
+server:
+  host: "0.0.0.0"
+  port: 8000
+
+# 解析配置
+parser:
+  # 支持的框架
+  frameworks:
+    - fastapi
+    - flask
+    - django
+  # 是否解析私有方法
+  include_private: false
