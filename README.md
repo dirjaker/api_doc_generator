@@ -15,8 +15,6 @@
 
 ---
 
-# API 文档生成器
-
 从 Python 代码自动生成 API 文档，支持 FastAPI/Flask/Django，支持自定义模板。
 
 ## ✨ 特性
