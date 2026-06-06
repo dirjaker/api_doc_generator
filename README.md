@@ -1,3 +1,20 @@
+<div align="center">
+
+# 📄 API Doc Generator
+
+### FastAPI 自动文档生成器
+
+[![格式](https://img.shields.io/badge/格式-3-blue?style=flat-square)]()
+[![模板](https://img.shields.io/badge/模板-5+-green?style=flat-square)]()
+[![框架](https://img.shields.io/badge/框架-FastAPI-orange?style=flat-square)]()
+[![更新](https://img.shields.io/badge/更新-2025.06-red?style=flat-square)]()
+
+*OpenAPI 解析 · Markdown/HTML/PDF 导出 · 自定义模板 · CLI 工具*
+
+</div>
+
+---
+
 # API 文档生成器
 
 从 Python 代码自动生成 API 文档，支持 FastAPI/Flask/Django，支持自定义模板。
@@ -190,3 +207,4 @@ api_doc_generator/
 ## 📄 License
 
 MIT License
+
