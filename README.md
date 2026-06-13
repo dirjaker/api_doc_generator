@@ -206,3 +206,37 @@ api_doc_generator/
 
 MIT License
 
+
+## Web Dashboard
+
+A management dashboard for generating and previewing API documentation.
+
+```bash
+# Start the dashboard
+python src/web/app.py
+
+# Or specify port
+python src/web/app.py --port 8080
+```
+
+Dashboard features:
+- Generate documentation from source code via UI
+- Preview in Markdown, HTML, and OpenAPI formats
+- Module and endpoint overview with parameter details
+
+Access at: `http://localhost:8080`
+
+## macOS Application
+
+A native macOS application via py2app.
+
+```bash
+python packaging/py2app_setup.py py2app
+# Output: dist/API Doc Generator.app
+```
+
+Features:
+- Source code path browser
+- Format selection (Markdown/HTML/OpenAPI)
+- Start/stop web server
+- Direct documentation generation from GUI
