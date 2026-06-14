@@ -1,242 +1,57 @@
-<div align="center">
+# API 文档生成器
 
-# 📄 API Doc Generator
+> API 文档生成器：AST 代码解析、多格式输出、在线预览
 
-### FastAPI 自动文档生成器
-
-[![格式](https://img.shields.io/badge/格式-3-blue?style=flat-square)]()
-[![模板](https://img.shields.io/badge/模板-5+-green?style=flat-square)]()
-[![框架](https://img.shields.io/badge/框架-FastAPI-orange?style=flat-square)]()
-[![更新](https://img.shields.io/badge/更新-2025.06-red?style=flat-square)]()
-
-*OpenAPI 解析 · Markdown/HTML/PDF 导出 · 自定义模板 · CLI 工具*
-
-</div>
+`Python` `FastAPI` `Jinja2`
 
 ---
 
-从 Python 代码自动生成 API 文档，支持 FastAPI/Flask/Django，支持自定义模板。
+## ✨ 功能特性
 
-## ✨ 特性
-
-- 🔍 **AST 解析** - 使用 Python AST 深度解析源代码，提取路由、参数、类型注解
-- 📝 **多格式输出** - 支持 Markdown、HTML、OpenAPI 3.0 格式
-- 🎨 **模板自定义** - 基于 Jinja2 的模板引擎，轻松自定义文档样式
-- 🌐 **在线预览** - 内置 FastAPI 服务器，实时预览文档
-- 🛠️ **CLI 工具** - 命令行一键生成文档
-- 🚀 **框架支持** - 支持 FastAPI、Flask、Django 路由解析
-
-## 📦 安装
-
-```bash
-# 克隆项目
-git clone <repository-url>
-cd api_doc_generator
-
-# 安装依赖
-pip install -r requirements.txt
-```
+- AST代码解析
+- 多格式输出
+- 在线预览
+- 自动更新
+- Swagger兼容
 
 ## 🚀 快速开始
 
-### 命令行使用
-
 ```bash
-# 生成 Markdown 文档
-python -m api_doc_generator.cli generate ./my_api -f markdown -o api_docs.md
+# 克隆项目
+git clone https://github.com/dirjaker/api_doc_generator.git
+cd api_doc_generator
 
-# 生成 HTML 文档
-python -m api_doc_generator.cli generate ./my_api -f html -o api_docs.html
+# 创建虚拟环境
+conda create -n api_doc_generator python=3.12 -y
+conda activate api_doc_generator
 
-# 生成 OpenAPI 文档
-python -m api_doc_generator.cli generate ./my_api -f openapi -o openapi.json
+# 安装依赖
+pip install -r requirements.txt
 
-# 查看 API 信息
-python -m api_doc_generator.cli info ./my_api
-
-# 启动在线预览服务器
-python -m api_doc_generator.cli serve ./my_api --port 8080
-```
-
-### Python API 使用
-
-```python
-from api_doc_generator import DocGenerator
-
-# 创建生成器
-generator = DocGenerator()
-
-# 从文件生成文档
-doc = generator.generate_from_file("my_api.py", title="My API", version="1.0.0")
-
-# 从目录生成文档
-doc = generator.generate_from_directory("./src", title="My API")
-
-# 输出为 Markdown
-markdown = generator.to_markdown(doc)
-
-# 输出为 HTML
-html = generator.to_html(doc)
-
-# 输出为 OpenAPI
-openapi = generator.to_openapi(doc)
-
-# 保存到文件
-generator.save_markdown(doc, "api_docs.md")
-generator.save_html(doc, "api_docs.html")
-generator.save_openapi(doc, "openapi.json")
-```
-
-## 📖 使用示例
-
-### 示例代码
-
-```python
-# example_api.py
-from fastapi import FastAPI, Query
-from pydantic import BaseModel
-
-app = FastAPI()
-
-class User(BaseModel):
-    id: int
-    name: str
-    email: str
-
-@app.get("/users", tags=["users"])
-async def get_users(
-    page: int = Query(1, description="页码"),
-    size: int = Query(10, description="每页数量")
-) -> list[User]:
-    """获取用户列表
-    
-    分页获取所有用户信息
-    """
-    pass
-
-@app.post("/users", tags=["users"])
-async def create_user(name: str, email: str) -> User:
-    """创建新用户"""
-    pass
-
-@app.get("/users/{user_id}", tags=["users"])
-async def get_user(user_id: int) -> User:
-    """根据ID获取用户信息"""
-    pass
-```
-
-### 生成文档
-
-```bash
-python -m api_doc_generator.cli generate example_api.py -f html -o users_api.html
-```
-
-### 自定义模板
-
-创建 `templates/custom.html`:
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ doc.title }}</title>
-</head>
-<body>
-    <h1>{{ doc.title }} v{{ doc.version }}</h1>
-    {% for module in doc.modules %}
-        <h2>{{ module.name }}</h2>
-        {% for endpoint in module.endpoints %}
-            <div>
-                <span>{{ endpoint.method }}</span>
-                <code>{{ endpoint.path }}</code>
-                <p>{{ endpoint.summary }}</p>
-            </div>
-        {% endfor %}
-    {% endfor %}
-</body>
-</html>
-```
-
-使用自定义模板：
-
-```bash
-python -m api_doc_generator.cli generate ./src --template templates/custom.html -o custom_docs.html
-```
-
-## 🌐 在线预览
-
-启动服务器后，可通过以下地址访问：
-
-```
-# HTML 文档
-http://localhost:8000/docs/html?source=./my_api
-
-# Markdown 文档
-http://localhost:8000/docs/markdown?source=./my_api
-
-# OpenAPI 文档
-http://localhost:8000/docs/openapi?source=./my_api
+# 运行项目
+python main.py
 ```
 
 ## 📁 项目结构
 
 ```
 api_doc_generator/
-├── __init__.py          # 包初始化
-├── models.py            # 数据模型
-├── code_parser.py       # 代码解析器 (AST)
-├── doc_generator.py     # 文档生成器
-├── template_engine.py   # Jinja2 模板引擎
-├── api.py               # FastAPI 服务
-├── cli.py               # CLI 入口
-├── config.yaml          # 配置文件
-├── requirements.txt     # 依赖
-└── README.md            # 项目文档
+├── ...
+└── README.md
 ```
 
 ## 🛠️ 技术栈
 
-- **Python AST** - 源代码解析
-- **FastAPI** - Web 服务框架
-- **Jinja2** - 模板引擎
-- **PyYAML** - 配置文件解析
-- **Rich** - 终端美化输出
+Python, FastAPI, Jinja2
 
-## 📄 License
+## 📝 标签
+
+`api` `documentation` `generator` `ast` `python` `fastapi`
+
+## 📄 许可证
 
 MIT License
 
+---
 
-## Web Dashboard
-
-A management dashboard for generating and previewing API documentation.
-
-```bash
-# Start the dashboard
-python src/web/app.py
-
-# Or specify port
-python src/web/app.py --port 8080
-```
-
-Dashboard features:
-- Generate documentation from source code via UI
-- Preview in Markdown, HTML, and OpenAPI formats
-- Module and endpoint overview with parameter details
-
-Access at: `http://localhost:8080`
-
-## macOS Application
-
-A native macOS application via py2app.
-
-```bash
-python packaging/py2app_setup.py py2app
-# Output: dist/API Doc Generator.app
-```
-
-Features:
-- Source code path browser
-- Format selection (Markdown/HTML/OpenAPI)
-- Start/stop web server
-- Direct documentation generation from GUI
+🔗 **GitHub**: [dirjaker/api_doc_generator](https://github.com/dirjaker/api_doc_generator)
