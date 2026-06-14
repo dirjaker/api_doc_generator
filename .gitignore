@@ -76,3 +76,7 @@ openapi.json
 # OS
 .DS_Store
 Thumbs.db
+
+# VitePress build output
+docs/.vitepress/dist/
+docs/.vitepress/cache/
