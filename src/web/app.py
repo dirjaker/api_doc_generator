@@ -78,6 +78,10 @@ class GenerateRequest(BaseModel):
 @app.post("/api/generate")
 async def generate_docs(req: GenerateRequest):
     source = Path(req.source)
+    # 防止路径穿越：解析后必须在 PROJECT_ROOT 内
+    resolved = source.resolve()
+    if not str(resolved).startswith(str(PROJECT_ROOT.resolve())):
+        raise HTTPException(403, "禁止访问项目目录以外的路径")
     if not source.exists():
         raise HTTPException(404, f"Source path not found: {req.source}")
 
