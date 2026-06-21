@@ -66,10 +66,7 @@ venv.bak/
 *.swo
 *~
 
-# Generated docs
-docs/
-*.md
-!README.md
+# Generated docs (not source docs)
 *.html
 openapi.json
 
