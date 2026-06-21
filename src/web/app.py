@@ -3,6 +3,7 @@ Web Dashboard for API Doc Generator
 Provides a dashboard for generating and previewing API documentation.
 """
 import sys
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -25,9 +26,10 @@ app = FastAPI(
     version="1.0.0",
 )
 
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost,http://127.0.0.1").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
